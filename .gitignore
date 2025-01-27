@@ -1,0 +1,30 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore google client secret file
+client_secret_*.json
+
+# Ignore log files
+*.log
+
+# Ignore test data files
+*.pdf
+*.ppt*
+*.jpg
+*.xls*
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore pycache
+*.pyc
+
+# Ignore audio/video data
+*.wav
+*.m4a
+
+# Ignore test directories
+asr_sample/
+testMonMeet/
+test_data/
