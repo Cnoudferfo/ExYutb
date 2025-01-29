@@ -34,6 +34,7 @@ def get_authenticated_service():
     return build('youtube', 'v3', credentials=creds)
 
 service = get_authenticated_service()
+print('Authenticated successfully!')
 
 # Ensure you have your client_secret.json file from the Google Console and store it in your project directory.
 
@@ -52,5 +53,34 @@ def get_playlist_items(service, playlist_id):
         video_id = item['snippet']['resourceId']['videoId']
         print(f'Title: {title}, Video ID: {video_id}')
 
-playlist_id = 'YOUR_PLAYLIST_ID'
-get_playlist_items(service, playlist_id)
+def get_my_playlists(service, srch_key='') -> str:
+    request = service.playlists().list(
+        part='snippet',
+        mine=True,
+        maxResults=50
+    )
+    response = request.execute()
+    print(f'Playlists for {response["items"][0]["snippet"]["channelTitle"]}:')
+    for item in response['items']:
+        title = item['snippet']['title']
+        playlist_id = item['id']
+        print(f'Title: {title}, Playlist ID: {playlist_id}')
+    
+    print(f'Searching for {srch_key}...')
+    for item in response['items']:
+        title = item['snippet']['title']
+        playlist_id = item['id']
+        if srch_key in title:
+            print(f'Title: {title}, Playlist ID: {playlist_id}')
+            return playlist_id
+    return
+
+# playlist_id = '1984'
+# get_playlist_items(service, playlist_id)
+
+the_pl_id = get_my_playlists(service, 'pl_for_api') # search for playlist with '1984' in the title
+if the_pl_id:
+    get_playlist_items(service, the_pl_id)
+else:
+    print('Playlist not found!')
+# This code will fetch the playlist items for the playlist with the ID 1984. You can change the playlist ID to any other playlist ID you have access to.
