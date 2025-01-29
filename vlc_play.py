@@ -26,6 +26,7 @@ ydl_opts = {
 }
 
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    print(f'VLC Version: {vlc.libvlc_get_version()}')
     
     for the_url in the_urls2:
         info_dict = ydl.extract_info(the_url, download=False)
@@ -37,8 +38,6 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
         player = vlc.MediaPlayer(video_url)
         player.play()
-        print('Playing audio stream:', video_url)
-        print(f'VLC Version: {vlc.libvlc_get_version()}')
         print(f'VLC Player State: {player.get_state()}')
 
         # To set the volume to 50%
