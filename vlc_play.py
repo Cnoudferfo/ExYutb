@@ -11,8 +11,8 @@ the_urls = [
     'https://music.youtube.com/watch?v=luOwnc5bqho'
 ]
 the_urls2 = [
-    'https://www.youtube.com/watch?v=q-hn8WH_-3U',
-    'https://www.youtube.com/watch?v=2WJhax7Jmxs'
+    'https://www.youtube.com/watch?v=Klqjebjw8n4',
+    'https://www.youtube.com/watch?v=GWtoeYznx8E'
 ]
 
 
@@ -41,7 +41,7 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         print(f'VLC Player State: {player.get_state()}')
 
         # To set the volume to 50%
-        player.audio_set_volume(50)
+        player.audio_set_volume(40)
         print(f'Audio volume: {player.audio_get_volume()}')
 
         while True:
