@@ -64,9 +64,11 @@ def list_usage():
 def list_states():
     print(f'States: {CALLER_STATES}')
 if __name__ == '__main__':
-    the_yt_playlists = ytplaylists.YTPlayLists()
-    the_chosen_playlist = the_yt_playlists.get_playlist_id('Joyful')[0]
-    the_playlist_items = the_yt_playlists.get_playlist_items(the_chosen_playlist['id'])
+    # ypls : YTPlayLists
+    ypls = ytplaylists.YTPlayLists()
+    # the_chosen_playlist = ypls.search_playlist_by_title('Joyful')[0]
+    the_chosen_playlist = ypls.list_my_playlists_and_pick_one()
+    the_playlist_items = ypls.get_playlist_items(the_chosen_playlist['id'])
     for item in the_playlist_items:
         print(f'Title: {item["title"]}, Video ID: {item["video_id"]}')
     the_urls_4 = [f'https://music.youtube.com/watch?v={item["video_id"]}' for item in the_playlist_items]

@@ -37,7 +37,7 @@ def get_raw_YT_url_info(the_url) -> dict:
 
 if __name__ == '__main__':
     the_yt_playlist = ytplaylists.YTPlayLists()
-    the_chosen_playlist = the_yt_playlist.get_playlist_id('pl_for_api')[0]
+    the_chosen_playlist = the_yt_playlist.search_playlist_by_title('pl_for_api')[0]
     the_urls_4 = [f'https://music.youtube.com/watch?v={item["video_id"]}' for item in the_yt_playlist.get_playlist_items(the_chosen_playlist['id'])]
     for item in the_urls_4:
         print(f'item={item}')

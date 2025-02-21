@@ -42,7 +42,7 @@ def get_raw_YT_url_info(the_url) -> dict:
 
 if __name__ == '__main__':
     the_yt_playlist = ytplaylists.YTPlayLists()
-    the_chosen_playlist = the_yt_playlist.get_playlist_id('Newfav')[0]
+    the_chosen_playlist = the_yt_playlist.search_playlist_by_title('Newfav')[0]
     the_playlist_items = the_yt_playlist.get_playlist_items(the_chosen_playlist['id'])
     for item in the_playlist_items:
         print(f'Title: {item["title"]}, Video ID: {item["video_id"]}')

@@ -50,7 +50,7 @@ class YTPlayLists:
     def get_my_playlists(self) -> list:
         return self.__my_playlists__
     # To return a list of playlist IDs which title containing the search key
-    def get_playlist_id(self, srch_key='') -> list:
+    def search_playlist_by_title(self, srch_key='') -> list:
         ret = []
         for item in self.__my_playlists__:
             title = item['title']
@@ -59,6 +59,11 @@ class YTPlayLists:
                 ret.append({'title': title, 'id': playlist_id})
                 break
         return ret
+    def get_playlist_by_number(self, number) -> dict:
+        # To check if the number is valid
+        if number < 0 or number >= len(self.__my_playlists__):
+            return None
+        return self.__my_playlists__[number]
     # To return a list of all video ids in a playlist
     def get_playlist_items(self, playlist_id) -> list:
         request = self.service.playlistItems().list(part='snippet', playlistId=playlist_id, maxResults=500)
@@ -69,15 +74,41 @@ class YTPlayLists:
             video_id = item['snippet']['resourceId']['videoId']
             ret.append({'title': title, 'video_id': video_id})
         return ret
+    # To list all my playlists and let user to pick up one
+    def list_my_playlists_and_pick_one(self):
+        cnt = 0
+        for item in self.__my_playlists__:
+            print(f'cnt={cnt}, title={item["title"]}, Playlist ID: {item["id"]}')
+            cnt += 1
+        # To read a valid number from stdin
+        while True:
+            number = int(input('Enter a number: '))
+            if number >= 0 and number < len(self.__my_playlists__):
+                break
+            print('Invalid number! Please try again.')
+        return self.get_playlist_by_number(number)
 
 if __name__ == '__main__':
     ypl = YTPlayLists()
     my_playlists = ypl.get_my_playlists()
+    cnt = 0
     for item in my_playlists:
-        print(f'title={item["title"]}, Playlist ID: {item["id"]}')
-    srch_rst = ypl.get_playlist_id('pl_for_api')
+        print(f'cnt={cnt}, title={item["title"]}, Playlist ID: {item["id"]}')
+        cnt += 1
+    # To read a number from stdin
+    number = int(input('Enter a number: '))
+    srch_rst = ypl.get_playlist_by_number(number)
+    # To chech if the srch_rst is None
+    if srch_rst is None:
+        print('Invalid number')
+    else:
+        print(f'No.{number} playlist is: title={srch_rst["title"]}, Playlist ID: {srch_rst["id"]}')
+
+    # srch_rst = ypl.search_playlist_by_title('pl_for_api')
+    # for item in srch_rst:
+    #     print(f'title={item["title"]}, Playlist ID: {item["id"]}')
+    
+    print(f'To list the items in the playlist: {srch_rst["title"]}')
+    srch_rst = ypl.get_playlist_items(srch_rst['id'])    
     for item in srch_rst:
-        print(f'title={item["title"]}, Playlist ID: {item["id"]}')
-    srch_rst = ypl.get_playlist_items(srch_rst[0]['id'])
-    for item in srch_rst:
-        print(f'title={item["title"]}, Video ID: {item["video_id"]}')
+        print(f'Song title={item["title"]}, Video ID: {item["video_id"]}')
