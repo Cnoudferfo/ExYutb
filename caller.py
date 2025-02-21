@@ -1,6 +1,8 @@
 import ytplaylists
 import platform
 import os
+import time
+
 # To detect if in SSH or not
 if platform.system() == 'Linux' and os.environ.get('SSH_CONNECTION') is not None:
     print('In SSH mode')
@@ -53,7 +55,9 @@ def a_sample_kb_handler(key) -> bool:
         the_vlc_player.set_volume(the_v)
         return True
     elif key == 'q':
-        # Stop listener
+        # Release the player
+        print('Release the player...')
+        the_vlc_player.release()
         print('Quit...')
         return False
     else:

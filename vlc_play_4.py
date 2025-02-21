@@ -5,7 +5,7 @@
 #
 import ytplaylists
 import vlc
-from ytitem import YTItem
+from ytitems import YTItems
 import time
 
 if __name__ == '__main__':
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     media_list = vlc_inst.media_list_new()
        
     for the_url in the_urls_4:
-        music_item = YTItem(the_url)
+        music_item = YTItems(the_url)
         if music_item is None:
             print('Panic! No video info found')
             exit(0)
